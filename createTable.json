@@ -1,0 +1,49 @@
+{
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "studentId",
+            "AttributeType": "N"
+        },
+        {
+            "AttributeName": "firstName",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "lastName",
+            "AttributeType": "S"
+        }
+    ],
+    "TableName": "student",
+    "KeySchema": [
+        {
+            "AttributeName": "studentId",
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "firstName",
+            "KeyType": "RANGE"
+        }
+    ],
+    "LocalSecondaryIndexes": [
+        {
+            "IndexName": "lastName",
+            "KeySchema": [
+                {
+                    "AttributeName": "studentId",
+                    "KeyType": "HASH"
+                },
+                {
+                    "AttributeName": "lastName",
+                    "KeyType": "RANGE"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            }
+        }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+    }
+}

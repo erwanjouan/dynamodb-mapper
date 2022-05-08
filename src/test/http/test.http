@@ -1,0 +1,8 @@
+POST http://localhost:8762/dynamoDb/save HTTP/1.1
+Content-Type: application/json
+
+{
+    "studentId" : "2",
+    "firstName" : "Shan2",
+    "lastName" : "Shanjeevan2"
+}   
