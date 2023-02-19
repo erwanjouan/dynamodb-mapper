@@ -1,4 +1,4 @@
-TABLE_NAME:=student
+TABLE_NAME:=photos
 ENDPOINT_URL:=http://localhost:8000
 JSON_ITEM:='{ "studentId": "1", "firstName": "Shan", "lastName": "Shanjeevan" }'
 
@@ -17,11 +17,11 @@ create-table:
 	aws dynamodb create-table \
     	--table-name $(TABLE_NAME) \
     	--attribute-definitions \
-			AttributeName=Artist,AttributeType=S \
-			AttributeName=SongTitle,AttributeType=S \
+			AttributeName=hashCode,AttributeType=N \
+			AttributeName=source,AttributeType=S \
     	--key-schema \
-			AttributeName=Artist,KeyType=HASH \
-			AttributeName=SongTitle,KeyType=RANGE \
+			AttributeName=hashCode,KeyType=HASH \
+			AttributeName=source,KeyType=RANGE \
     	--provisioned-throughput \
 			ReadCapacityUnits=1,WriteCapacityUnits=1 \
 	--endpoint-url $(ENDPOINT_URL)
@@ -38,6 +38,13 @@ put:
 	aws dynamodb put-item \
 		--table-name $(TABLE_NAME) \
 		--item "$${JSON_ENTRY}" \
+		--return-consumed-capacity TOTAL \
+		--endpoint-url $(ENDPOINT_URL)
+
+put-json:
+	aws dynamodb put-item \
+		--table-name $(TABLE_NAME) \
+		--item file://src/test/resources/photo.json \
 		--return-consumed-capacity TOTAL \
 		--endpoint-url $(ENDPOINT_URL)
 
